@@ -52,6 +52,10 @@ export default class DisbandSquadByName extends BasePlugin {
     for (const { regexes, messages } of this.options.names) {
       for (const regex of regexes) {
         if (squadName.match(regex)) {
+          this.verbose(
+            1,
+            `Сквад ${player.squadID}/${player.teamID} был расформирован за название отряда ${squadName} по regex ${regex}`
+          );
           await Promise.all([
             this.server.rcon.execute(`AdminDisbandSquad ${player.teamID} ${player.squadID}`),
             this.warns(player.eosID, messages, this.options.message_frequency),
